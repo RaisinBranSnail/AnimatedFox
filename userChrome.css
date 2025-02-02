@@ -1,122 +1,118 @@
 *,
 *::before,
 *::after {
-	font-family: JetBrainsMono Nerd Font, JetBrains Mono, monospace, monospace;
+    font-family: JetBrainsMono Nerd Font, JetBrains Mono, monospace, monospace;
 }
 
+/* Hide unnecessary elements */
 #alltabs-button,
 .titlebar-buttonbox-container,
 #page-action-buttons,
 #tracking-protection-icon-container,
 #identity-box {
-	display: none;
+    display: none;
 }
 
 #titlebar {
-	z-index: 2;
+    position: relative;
+    z-index: 3;
 }
 
-@media (-moz-bool-pref: "animatedFox.squareCorners") {
-	:root * {
-		border-radius: 0px !important;
-	}
-}
-
-@media (-moz-bool-pref: "animatedFox.hideSingleTab") {
-	.tabbrowser-tab:only-of-type {
-		height: 0px !important;
-
-		#titlebar:has(&):after {
-			content: '';
-			position: fixed !important;
-			right: 0;
-			left: 0;
-			top: 0;
-			height: 1rem;
-		}
-
-		:has(&) #navigator-toolbox:is(:hover, :focus-within, :has([open])) #nav-bar {
-			top: 1rem !important;
-		}
-	}
-
-	:has(.tabbrowser-tab:only-of-type) #nav-bar {
-		top: -3rem !important;
-	}
-}
-
-@media (-moz-bool-pref: "animatedFox.showTabCloseButton") {
-	#tabbrowser-tabs .tabbrowser-tab:not([pinned], [selected]):hover .tab-close-button {
-		display: flex !important;
-	}
-}
-
+/* Nav bar container styling */
 #nav-bar {
-	position: fixed !important;
-	top: 0;
-	left: 25%;
-	right: 25%;
+    position: absolute !important;
+    top: 100%;
+    left: 25%;
+    right: 25%;
+    display: flex !important;
+    align-items: center !important;
+    
+    @media (max-width: 1100px) {
+        left: 15%;
+        right: 15%;
+    }
 
-	@media (max-width: 1100px) {
-		left: 15%;
-		right: 15%;
-	}
+    @media (max-width: 800px) {
+        left: 30px;
+        right: 30px;
+    }
 
-	@media (max-width: 800px) {
-		left: 30px;
-		right: 30px;
-	}
+    z-index: 2;
+    transition: transform 0.3s cubic-bezier(0.270, 0.910, 0.435, 1.280),
+                opacity 0.1s ease !important;
+    border-top: none !important;
+    border-radius: 10px;
+    border: 1px solid var(--tab-selected-bgcolor) !important;
+    background: var(--lwt-accent-color) !important;
+    opacity: 0;
+    overflow: visible !important;
+}
 
-	z-index: 1;
-	transition: top 0.3s cubic-bezier(0.270, 0.910, 0.435, 1.280),
-	opacity 0.1s ease !important;
-	border-top: none !important;
-	border-radius: 10px;
-	border: 1px solid var(--tab-selected-bgcolor) !important;
-	background: var(--lwt-accent-color) !important;
-	opacity: 0;
-	overflow: visible !important;
-	
-	&::after {
-		content: "";
-		position: absolute;
-		width: 100%;
-		height: 1rem;
-		top: -1rem;
-	}
+/* Keep navigation buttons visible and properly aligned */
+#nav-bar-customization-target {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+/* Style the navigation buttons */
+.toolbarbutton-1 {
+    padding: 0 8px !important;
+}
+
+#back-button,
+#forward-button,
+#reload-button {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* URL bar container */
+#urlbar-container {
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 1 !important;
+}
+
+#urlbar {
+    margin: 0 8px !important;
 }
 
 #navigator-toolbox {
-	border-bottom: none !important;
+    position: relative;
+    border-bottom: none !important;
 }
 
 #tabs-newtab-button {
-	opacity: 0;
-	transition: 0.2s opacity ease;
+    opacity: 0;
+    transition: 0.2s opacity ease;
 }
 
+/* Show/hide behavior */
 #navigator-toolbox:not(:hover, :focus-within, :has([open])) #nav-bar {
-	transition-delay: 0.2s !important;
+    transition-delay: 0.2s !important;
+    transform: translateY(-60%) scale(0.95);
 }
 
 #navigator-toolbox:is(:hover, :focus-within, :has([open])) {
-	#nav-bar {
-		top: 3.5rem;
-		opacity: 1;
-	}
+    #nav-bar {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
 
-	#tabs-newtab-button {
-		opacity: 1;
-	}
+    #tabs-newtab-button {
+        opacity: 1;
+    }
 }
 
 :where(.tab-background) {
-	box-shadow: none !important;
-	border-radius: 10px !important;
+    box-shadow: none !important;
+    border-radius: 10px !important;
 }
 
 .tab-close-button {
-	display: none;
+    display: none;
 }
 
 .tabbrowser-tab {
